@@ -21,7 +21,8 @@ module wedge_180(h, r, d)
 	}
 }
 
-module wedge(h, r, d){
+module wedge(h, r, d)
+{
 	intersection()
 	{
 		if(d <= 180)
@@ -37,8 +38,10 @@ module wedge(h, r, d){
 
 module Ring(outer, inner, height)
 {
-	intersection(){
-		difference() {
+	intersection()
+	{
+		difference()
+		{
 			cylinder(h = height, r = outer/2);
 			cylinder(h = height, r = inner/2);
 		}
@@ -78,26 +81,54 @@ module EFmountSocket()
 	}
 }
 
-union()
-{
-	translate([0, 0, 10])
-		Ring(73, 55, 10);
-
-	// Cylinder to hold night vision tube
-	translate([0, 0, 10])
-		Ring(73, 70, 20 * 4);
-
-	EFmountSocket();
-
-	// Add locking tabs for EF mount
-	for(i = [0 : 3])
+difference(){
+	union()
 	{
-		rotate(36 + (i * 120))
+		// Internal diameter
+		nighttube = 71;
+
+		// External diameter
+		nighttube_edge = 75;
+
+		translate([0, 0, 10])
+			Ring(nighttube_edge, 55, 10);
+
+		// Cylinder to hold night vision tube
+		translate([0, 0, 10])
+			Ring(nighttube_edge, nighttube, 20 * 4.5);
+
+		EFmountSocket();
+
+		// Add locking tabs for EF mount
+		for(i = [0 : 3])
 		{
-			translate([0, (55 / 2) - 1.5, 7 + (1.5/2)])
+			rotate(36 + (i * 120))
 			{
-				cube([1.5, 1.5, 3]);
+				translate([0, (55 / 2) - 1.5, 7 + (1.5/2)])
+				{
+					cube([1.5, 1.5, 3]);
+				}
 			}
 		}
+
+		// Battery holder
+		translate([35, 10, 100])
+		rotate([90, 90, 0])
+		difference()
+		{
+			// Thickness of wall
+			wall = 2;
+			bat_len = 85 + wall;
+			bat_wid = 21 + wall;
+			bat_hig = 21;
+			cube([bat_len + wall, bat_hig + wall, bat_wid + wall]);
+			translate([wall, wall, wall])
+			cube([bat_len - wall, bat_hig, bat_wid - wall]);
+		}
 	}
+
+	// Hole for wires
+	translate([0,0,25])
+	rotate([0,90,0])
+		cylinder(100,4,4);
 }
