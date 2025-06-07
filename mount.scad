@@ -144,7 +144,7 @@ difference(){
 				{
 					rotate([-i * 120 + 300, 90, 0])
 					translate([-80, 0, 35.4 + 3])
-						cylinder(d=8,h=3, center = true);
+						cylinder(h=3, r1=8, r2=8/2, center = true);
 				}
 			}
 
