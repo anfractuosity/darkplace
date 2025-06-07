@@ -9,7 +9,7 @@
 // I added a cylinder which the night vision tube fits into, battery holder and
 // switch holder.
 
-$fn = 128;
+$fn = 512;
 $fa = 1.0;
 $fs = 1.0;
 clearance = 0.0; // increase up to max 1.0 if too tight
@@ -95,12 +95,12 @@ nut_second_plat=0.2;
 first_plat_size=3.2;
 second_plat_size=5.75;
 
-// nut cutout with screw
+// Nut cutout with bolt holder
 module draw_nut_cutout(screw_length)
 {
     cylinder( d=nut_dim, h=nut_height, $fn=6);
     translate([0,0,nut_height])
-    cylinder( d=screw_dim, h=screw_length);
+		cylinder( d=screw_dim, h=screw_length);
 }
 
 difference(){
@@ -117,9 +117,9 @@ difference(){
 		// External diameter
 		nighttube_edge = 75;
 
+		// EF lens holder
 		translate([0, 0, 10])
 			Ring(nighttube_edge, 55, wall);
-
 		EFmountSocket();
 
 		// Add locking tabs for EF mount
@@ -137,6 +137,7 @@ difference(){
 		translate([0, 0, 10])
 		difference()
 		{
+			// Night vision tube holder and cones for bolts
 			union()
 			{
 				Ring(nighttube_edge, nighttube, 20 * 5);
@@ -148,6 +149,7 @@ difference(){
 				}
 			}
 
+			// Add nut holders
 			for(i = [0 : 2])
 			{
 				rotate([-i * 120 + 300, 90, 0])
@@ -159,11 +161,12 @@ difference(){
 			}
 		}
 
-		// Battery holder
 		rotate([0, 90, 0])
 		translate([-110, - (bat_wid / 2), 35.5])
 		union(){
 			translate([87, 0, 0])
+
+			// Switch holder
 			difference()
 			{
 				union()
@@ -172,7 +175,7 @@ difference(){
 					{
 						cube([6.9, bat_wid+wall, bat_hig + wall - 6.5 ]);
 						translate([6.9 / 2 - 1.5 / 2,  12.7 / 2, 8])
-						cube([2.5, 12.7, bat_hig + wall - 6.5 ]);
+							cube([2.5, 12.7, bat_hig + wall - 6.5 ]);
 					}
 					translate([-wall, 0, 0])
 						cube([wall, bat_wid+wall, bat_hig + wall]);
@@ -182,11 +185,12 @@ difference(){
 					cube([10, 7.5 * 1.5, 12.7]);
 			}
 
+			// Battery holder
 			difference()
 			{
 				cube([bat_len + wall, bat_wid + wall, bat_hig + wall]);
 				translate([wall, wall, wall])
-				cube([bat_len - wall, bat_wid - wall, bat_hig]);
+					cube([bat_len - wall, bat_wid - wall, bat_hig]);
 			}
 		}
 	}
