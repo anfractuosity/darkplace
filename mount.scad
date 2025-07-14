@@ -9,7 +9,7 @@
 // I added a cylinder which the night vision tube fits into, battery holder and
 // switch holder.
 
-$fn = 512;
+$fn = 256;
 $fa = 1.0;
 $fs = 1.0;
 clearance = 0.0; // increase up to max 1.0 if too tight
@@ -181,8 +181,8 @@ difference(){
 						cube([wall, bat_wid+wall, bat_hig + wall]);
 				}
 
-				translate([-wall, 12.7 / 2, 0])
-					cube([10, 7.5 * 1.5, 12.7]);
+				translate([-wall, 0, 0])
+					cube([10, bat_wid, 12.7]);
 			}
 
 			// Battery holder
