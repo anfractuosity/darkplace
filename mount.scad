@@ -106,9 +106,11 @@ module draw_nut_cutout(screw_length)
 difference(){
 	// Thickness of wall
 	wall = 2;
-	bat_len = 85 + 6.9 + wall;
+	bat_len = 95 + 6.9 + wall;
 	bat_wid = 21 + wall;
 	bat_hig = 21;
+	tube_len = 110;
+
 	union()
 	{
 		// Internal diameter
@@ -140,7 +142,7 @@ difference(){
 			// Night vision tube holder and cones for bolts
 			union()
 			{
-				Ring(nighttube_edge, nighttube, 20 * 5);
+				Ring(nighttube_edge, nighttube, tube_len);
 				for(i = [0 : 2])
 				{
 					rotate([-i * 120 + 300, 90, 0])
@@ -162,9 +164,9 @@ difference(){
 		}
 
 		rotate([0, 90, 0])
-		translate([-110, - (bat_wid / 2), 35.5])
+		translate([-(tube_len + 10), -((bat_wid + wall) / 2), 35.3])
 		union(){
-			translate([87, 0, 0])
+			translate([95, 0, 0])
 
 			// Switch holder
 			difference()
@@ -173,9 +175,9 @@ difference(){
 				{
 					difference()
 					{
-						cube([6.9, bat_wid+wall, bat_hig + wall - 6.5 ]);
+						cube([10, bat_wid+wall, bat_hig + wall - 6.5]);
 						translate([6.9 / 2 - 1.5 / 2,  12.7 / 2, 8])
-							cube([2.5, 12.7, bat_hig + wall - 6.5 ]);
+							cube([2.5, 12.7, bat_hig + wall - 6.5]);
 					}
 					translate([-wall, 0, 0])
 						cube([wall, bat_wid+wall, bat_hig + wall]);
@@ -196,7 +198,7 @@ difference(){
 	}
 
 	// Hole for wires
-	translate([0,0,30])
-	rotate([0,90,0])
-		cylinder(100,4,4);
+	translate([0, 0, 35])
+	rotate([0, 90, 0])
+		cylinder(100, 4, 4);
 }
